@@ -1,13 +1,13 @@
 package com.example.github_tracker.security;
 
-import io.jsonwebtoken.*;
-import io.jsonwebtoken.security.Keys;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import java.security.Key;
 import java.util.Date;
 import java.util.stream.Collectors;
 
@@ -20,58 +20,42 @@ public class JwtTokenProvider {
     @Value("${app.jwt.expiration}")
     private int jwtExpirationInMs;
 
-    private Key key;
-
-    public JwtTokenProvider(@Value("${app.jwt.secret}") String jwtSecret) {
-        this.key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
-    }
-
     public String generateToken(Authentication authentication) {
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
 
-        String authorities = userPrincipal.getAuthorities().stream()
+        String roles = userPrincipal.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
-        return Jwts.builder()
-                .setSubject(userPrincipal.getUsername())
-                .claim("id", userPrincipal.getId())
-                .claim("roles", authorities)
-                .setIssuedAt(new Date())
-                .setExpiration(expiryDate)
-                .signWith(key)
-                .compact();
+        return JWT.create()
+                .withSubject(userPrincipal.getUsername())
+                .withIssuedAt(now)
+                .withExpiresAt(expiryDate)
+                .withClaim("id", userPrincipal.getId())
+                .withClaim("roles", roles)
+                .sign(Algorithm.HMAC256(jwtSecret));
     }
 
-    public String getUsernameFromJWT(String token) {
-        Claims claims = Jwts.parserBuilder()
-                .setSigningKey(key)
+    public String getUsernameFromToken(String token) {
+        DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256(jwtSecret))
                 .build()
-                .parseClaimsJws(token)
-                .getBody();
+                .verify(token);
 
-        return claims.getSubject();
+        return decodedJWT.getSubject();
     }
 
-    public boolean validateToken(String authToken) {
+    public boolean validateToken(String token) {
         try {
-            Jwts.parserBuilder()
-                    .setSigningKey(key)
+            JWT.require(Algorithm.HMAC256(jwtSecret))
                     .build()
-                    .parseClaimsJws(authToken);
+                    .verify(token);
             return true;
-        } catch (SecurityException | MalformedJwtException ex) {
-            System.out.println("Invalid JWT signature");
-        } catch (ExpiredJwtException ex) {
-            System.out.println("Expired JWT token");
-        } catch (UnsupportedJwtException ex) {
-            System.out.println("Unsupported JWT token");
-        } catch (IllegalArgumentException ex) {
-            System.out.println("JWT claims string is empty");
+        } catch (Exception e) {
+            System.out.println("JWT Validation Error: " + e.getMessage());
+            return false;
         }
-        return false;
     }
 }

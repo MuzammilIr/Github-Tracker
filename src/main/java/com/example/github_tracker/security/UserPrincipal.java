@@ -1,6 +1,6 @@
 package com.example.github_tracker.security;
 
-import com.github.tracker.model.User;
+import com.example.github_tracker.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

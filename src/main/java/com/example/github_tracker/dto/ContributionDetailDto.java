@@ -1,6 +1,7 @@
 package com.example.github_tracker.dto;
 
-import com.github.tracker.model.Contribution;
+import com.example.github_tracker.model.Contribution;
+import com.example.github_tracker.model.ContributionDetail;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ContributionDto {
+public class ContributionDetailDto {
     private Long id;
     private String username;
     private String repositoryName;
@@ -25,11 +26,11 @@ public class ContributionDto {
     private Integer filesChanged;
     private List<ContributionDetailDto> details;
 
-    public static ContributionDto fromEntity(Contribution contribution) {
-        ContributionDto dto = new ContributionDto();
+    public static ContributionDetailDto fromEntity(Contribution contribution) {
+        ContributionDetailDto dto = new ContributionDetailDto();
         dto.setId(contribution.getId());
         dto.setUsername(contribution.getUser().getUsername());
-        dto.setRepositoryName(contribution.getRepository().getName());
+        dto.setRepositoryName(contribution.getGitRepository().getName());
         dto.setContributionType(contribution.getContributionType().name());
         dto.setTimestamp(contribution.getTimestamp());
         dto.setDescription(contribution.getDescription());
@@ -44,6 +45,23 @@ public class ContributionDto {
                     .collect(Collectors.toList()));
         }
 
+        return dto;
+    }
+
+    // New fromEntity method for ContributionDetail
+    public static ContributionDetailDto fromEntity(ContributionDetail contributionDetail) {
+        ContributionDetailDto dto = new ContributionDetailDto();
+        dto.setId(contributionDetail.getId());
+        dto.setUsername(contributionDetail.getContribution().getUser().getUsername());
+        dto.setRepositoryName(contributionDetail.getContribution().getGitRepository().getName());
+        dto.setContributionType(contributionDetail.getContribution().getContributionType().name());
+        dto.setTimestamp(contributionDetail.getContribution().getTimestamp());
+        dto.setDescription(contributionDetail.getContribution().getDescription());
+        dto.setUrl(contributionDetail.getContribution().getUrl());
+        dto.setLinesAdded(contributionDetail.getContribution().getLinesAdded());
+        dto.setLinesRemoved(contributionDetail.getContribution().getLinesRemoved());
+        dto.setFilesChanged(contributionDetail.getContribution().getFilesChanged());
+        // If ContributionDetail has its own details list, you may handle it here similarly if needed
         return dto;
     }
 }

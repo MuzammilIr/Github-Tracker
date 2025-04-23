@@ -1,6 +1,6 @@
 package com.example.github_tracker.dto;
 
-import com.github.tracker.model.Contribution;
+import com.example.github_tracker.model.Contribution;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,11 +25,11 @@ public class ContributionDto {
     private Integer filesChanged;
     private List<ContributionDetailDto> details;
 
-    public static ContributionDto fromEntity(Contribution contribution) {
-        ContributionDto dto = new ContributionDto();
+    public static ContributionDetailDto fromEntity(Contribution contribution) {
+        ContributionDetailDto dto = new ContributionDetailDto();
         dto.setId(contribution.getId());
         dto.setUsername(contribution.getUser().getUsername());
-        dto.setRepositoryName(contribution.getRepository().getName());
+        dto.setRepositoryName(contribution.getGitRepository().getName());
         dto.setContributionType(contribution.getContributionType().name());
         dto.setTimestamp(contribution.getTimestamp());
         dto.setDescription(contribution.getDescription());

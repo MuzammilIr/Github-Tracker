@@ -1,6 +1,6 @@
 package com.example.github_tracker.repository;
 
-import com.github.tracker.model.User;
+import com.example.github_tracker.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

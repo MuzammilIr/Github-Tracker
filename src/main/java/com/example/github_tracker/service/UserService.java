@@ -1,9 +1,9 @@
 package com.example.github_tracker.service;
 
-import com.github.tracker.dto.UserDto;
-import com.github.tracker.exception.ResourceNotFoundException;
-import com.github.tracker.model.User;
-import com.github.tracker.repository.UserRepository;
+import com.example.github_tracker.dto.UserDto;
+import com.example.github_tracker.exception.ResourceNotFoundException;
+import com.example.github_tracker.model.User;
+import com.example.github_tracker.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;

@@ -1,9 +1,9 @@
 package com.example.github_tracker.service;
 
-import com.github.tracker.dto.RepositoryDto;
-import com.github.tracker.exception.ResourceNotFoundException;
-import com.github.tracker.model.Repository;
-import com.github.tracker.repository.RepositoryRepository;
+import com.example.github_tracker.dto.RepositoryDto;
+import com.example.github_tracker.exception.ResourceNotFoundException;
+import com.example.github_tracker.model.Repository;
+import com.example.github_tracker.repository.RepositoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +27,7 @@ public class RepositoryService {
 
     public RepositoryDto getRepositoryById(Long id) {
         Repository repository = repositoryRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Repository not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("GitRepository not found with id: " + id));
 
         return RepositoryDto.fromEntity(repository);
     }
@@ -45,7 +45,7 @@ public class RepositoryService {
 
     public void deleteRepository(Long id) {
         if (!repositoryRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Repository not found with id: " + id);
+            throw new ResourceNotFoundException("GitRepository not found with id: " + id);
         }
 
         repositoryRepository.deleteById(id);
@@ -64,7 +64,7 @@ public class RepositoryService {
 
     public boolean configureWebhook(Long repositoryId, String accessToken) {
         Repository repository = repositoryRepository.findById(repositoryId)
-                .orElseThrow(() -> new ResourceNotFoundException("Repository not found with id: " + repositoryId));
+                .orElseThrow(() -> new ResourceNotFoundException("GitRepository not found with id: " + repositoryId));
 
         // This would call GitHub API to set up a webhook
         String webhookSecret = gitHubApiService.configureWebhook(repository.getUrl(), accessToken);

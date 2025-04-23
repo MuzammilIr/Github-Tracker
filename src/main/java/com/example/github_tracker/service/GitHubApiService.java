@@ -2,10 +2,10 @@ package com.example.github_tracker.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.tracker.model.Contribution;
-import com.github.tracker.model.ContributionDetail;
-import com.github.tracker.model.Repository;
-import com.github.tracker.model.User;
+import com.example.github_tracker.model.Contribution;
+import com.example.github_tracker.model.ContributionDetail;
+import com.example.github_tracker.model.Repository;
+import com.example.github_tracker.model.User;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;

@@ -1,10 +1,10 @@
 package com.example.github_tracker.service;
 
-import com.github.tracker.dto.AuthResponse;
-import com.github.tracker.model.User;
-import com.github.tracker.repository.UserRepository;
-import com.github.tracker.security.JwtTokenProvider;
-import com.github.tracker.security.UserPrincipal;
+import com.example.github_tracker.dto.AuthResponse;
+import com.example.github_tracker.model.User;
+import com.example.github_tracker.repository.UserRepository;
+import com.example.github_tracker.security.JwtTokenProvider;
+import com.example.github_tracker.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
