@@ -1,8 +1,8 @@
 package com.example.github_tracker.security;
 
-import com.github.tracker.exception.ResourceNotFoundException;
-import com.github.tracker.model.User;
-import com.github.tracker.repository.UserRepository;
+import com.example.github_tracker.exception.ResourceNotFoundException;
+import com.example.github_tracker.model.User;
+import com.example.github_tracker.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

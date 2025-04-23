@@ -27,7 +27,7 @@ public class Contribution {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "repo_id", nullable = false)
-    private Repository repository;
+    private GitRepository repository;  // Changed field name from gitRepository to repository
 
     @Column(name = "contribution_type", nullable = false)
     @Enumerated(EnumType.STRING)

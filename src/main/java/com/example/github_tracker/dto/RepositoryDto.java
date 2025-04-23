@@ -1,6 +1,6 @@
 package com.example.github_tracker.dto;
 
-import com.github.tracker.model.Repository;
+import com.example.github_tracker.model.GitRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,12 +14,12 @@ public class RepositoryDto {
     private String name;
     private String url;
 
-    public static RepositoryDto fromEntity(Repository repository) {
+    public static RepositoryDto fromEntity(GitRepository gitRepository) {
         RepositoryDto dto = new RepositoryDto();
-        dto.setId(repository.getId());
-        dto.setGithubRepoId(repository.getGithubRepoId());
-        dto.setName(repository.getName());
-        dto.setUrl(repository.getUrl());
+        dto.setId(gitRepository.getId());
+        dto.setGithubRepoId(gitRepository.getGithubRepoId());
+        dto.setName(gitRepository.getName());
+        dto.setUrl(gitRepository.getUrl());
         return dto;
     }
 }

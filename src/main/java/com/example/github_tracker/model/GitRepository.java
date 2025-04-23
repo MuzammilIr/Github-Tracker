@@ -16,7 +16,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Repository {
+public class GitRepository {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,6 +42,6 @@ public class Repository {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "repository", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "repository", cascade = CascadeType.ALL) // field name matches Contribution
     private Set<Contribution> contributions = new HashSet<>();
 }
